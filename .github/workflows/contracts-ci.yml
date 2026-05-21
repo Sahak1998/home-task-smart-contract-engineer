@@ -1,0 +1,33 @@
+name: contracts-ci
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contracts
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install
+        run: npm install --legacy-peer-deps --ignore-scripts
+
+      - name: Compile
+        run: npx hardhat compile
+
+      - name: Lint
+        run: npx solhint 'contracts/WorldCupBetting.sol'
+
+      - name: Test
+        run: npx hardhat test

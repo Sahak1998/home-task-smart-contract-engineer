@@ -15,3 +15,6 @@ artifacts
 # IDE
 .vscode
 .idea
+# coverage artifacts
+coverage/
+coverage.json
